@@ -2,7 +2,9 @@
 
 A lightweight, local-memory REST API built with Node.js and Express to manage tasks. 
 
-> ⚠️ **Note:** This project uses **in-memory storage** (`local memory`). Any data created, updated, or deleted will reset whenever the server restarts.
+> ⚠️ **Note:** This project (v1.0) previously used **in-memory storage** (`local memory`). Any data created, updated, or deleted was reset whenever the server restarted.
+
+> Update v1.1 now uses SQLite database to hold the data. SQLite was selected mainly because it's lightweight. Further updates will likely use more mainstream database systems, e.g. PostgreSQL
 
 ## Prerequisites
 
@@ -22,7 +24,7 @@ cd task-manager-api
 
 ### 2. Install Dependencies
 ```bash
-npm install express swagger-ui-express
+npm install express swagger-ui-express better-sqlite3
 ```
 
 ### 3. Run the Application
@@ -59,4 +61,4 @@ You can test these endpoints using tools like Postman, Bruno, cURL or swaggerUI.
 
 * **Node.js** - JavaScript runtime environment
 * **Express** - Minimalist web framework
-* **In-Memory Arrays** - Temporal runtime data storage
+* **SQLite** - Runtime data storage
