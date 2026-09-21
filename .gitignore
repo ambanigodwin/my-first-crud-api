@@ -1,4 +1,10 @@
 /node_modules
+.env
 package-lock.json
 server_init.js
 server.js
+#Database storage /log files
+*.db
+*.log
+#Docker/Os temporary files
+.DS_Store

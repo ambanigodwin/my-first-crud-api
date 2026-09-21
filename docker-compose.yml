@@ -1,0 +1,49 @@
+services:
+  # Service 1: Node.js Express API
+  api:
+    build: .
+    container_name: taskstore_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: postgres_db  # <--- Internal Docker container name, no longer localhost since it's Docker now
+      DB_PORT: 5432
+    depends_on:
+      - postgres_db
+
+  # Service 2: PostgreSQL Database
+  postgres_db:
+    image: postgres:16
+    container_name: taskstore_postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Service 3: pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    depends_on:
+      - postgres_db
+
+volumes:
+  postgres_data:
